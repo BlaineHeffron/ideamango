@@ -1,0 +1,115 @@
+<!--
+$(document).ready(function(){
+	proj_loc_number = $("#project_location_form > div").size()+1;
+	proj_job_number = $("#project_job_form > div").size()+1;
+	$("#add_project_location").live("click", function() {
+		$("#project_location_form").append('<div id="locd'+proj_loc_number+'"><label for="city'+proj_loc_number+'">City</label><input type="text" name="city'+proj_loc_number+'" id="city'+proj_loc_number+'"><label for="region'+proj_loc_number+'">State/Province/Region</label><input type="text" name="region'+proj_loc_number+'" id="region'+proj_loc_number+'"><label for="country'+proj_loc_number+'">Country</label><input type="text" name="country'+proj_loc_number+'" id="country'+proj_loc_number+'"><a href="#" id="rem_loc">Remove location</a></div>');
+		for(var i=1; i<proj_job_number; i++){
+			$('#job_'+i+'_locs ul').append('<li><input type="checkbox" name="job_'+i+'_loc_'+proj_loc_number+'" id="job_'+i+'_loc_'+proj_loc_number+'" value="0"><label for="job_'+i+'_loc_'+proj_loc_number+'">Location '+proj_loc_number+'</label></li>');
+		}
+
+		proj_loc_number = proj_loc_number+1;
+	});
+	$("#add_project_job").live("click", function() {
+		var loc_box = '<div id="job_'+proj_job_number+'_locs">Location(s)<ul>';
+		for(var i=1; i<proj_loc_number; i++){
+			var city_label = $("#city"+i).val();
+			var region_label = $("#region"+i).val();
+			loc_box = loc_box + '<li><input type="checkbox" name="job_'+proj_job_number+'_loc_'+i+'" id="job_'+proj_job_number+'_loc_'+i+'" value="0"><label for="job_'+proj_job_number+'_loc_'+i+'">'+city_label+' , '+region_label+'</label></li>';
+		}
+		$("#project_job_form").append('<div id="jobd'+proj_job_number+'"><label for="job_title'+proj_job_number+'">Job Title</label><input type="text" name="job_title'+proj_job_number+'" id="job_title'+proj_job_number+'"><br/><label for="job_desc'+proj_job_number+'">Job Description</label><textarea name="job_desc'+proj_job_number+'" id="job_desc'+proj_job_number+'" rows="4" cols="40"></textarea><br/><label for="job_tags'+proj_job_number+'">Tags</label><input type="text" name="job_tags'+proj_job_number+'" id="job_tags'+proj_job_number+'"><br/><input type="checkbox" name="money_job'+proj_job_number+'" id="money_job'+proj_job_number+'" value="1"><label for="money_job'+proj_job_number+'">Check this box if the position is paid.</label><br/>'+loc_box+'</ul></div><a href="#" id="rem_job">Remove job</a></div>');
+		proj_job_number = proj_job_number+1;
+
+	});   
+	$('#rem_loc').live('click', function() {
+    if( proj_loc_number > 2 ) {
+      var input_select = $(this).parents('div').attr("id");
+			var i = (parseInt(/locd(\d+)/.exec(input_select)[1],10)+1);
+			$(this).parent('div').remove();
+			for(var k=1; k<proj_job_number; k++){
+				$("#job_"+k+"_loc_"+(i-1)).parent('li').remove();
+			}
+                        proj_loc_number--;
+			while(i<=proj_loc_number){
+				$("#locd"+i).attr('id', "locd"+(i-1));
+				$("input[name=city"+i+"]").attr({name: "city"+(i-1), id: "city"+(i-1)});
+				$("label[for='city"+i+"']").attr('for','city'+(i-1));
+				$("input[name=region"+i+"]").attr({name: "region"+(i-1), id: "region"+(i-1)});
+				$("label[for='region"+i+"']").attr('for','region'+(i-1));
+				$("input[name=country"+i+"]").attr({name: "country"+(i-1), id:"country"+(i-1)});
+				$("label[for='country"+i+"']").attr('for','country'+(i-1));
+				for(var j=1; j<proj_job_number; j++){
+					$("#job_"+j+"_loc_"+i).attr({name: "job_"+j+"_loc_"+(i-1), id: "job_"+j+"_loc_"+(i-1)});
+					$("label[for='job_"+j+"_loc_"+i+"']").attr('for','job_'+j+'_loc_'+(i-1));
+				}
+				i++;
+			}
+    }
+    return false;
+  });
+	$('#rem_job').live('click', function() {
+    if( proj_job_number > 2 ) {
+			var input_select = $(this).parents('div').attr("id");
+			var i = (parseInt(/jobd(\d+)/.exec(input_select)[1],10)+1);
+      $(this).parent('div').remove();
+      proj_job_number--;
+			while(i<=proj_job_number){
+				$("#jobd"+i).attr('id', "jobd"+(i-1));
+				$("input[name=job_title"+i+"]").attr({name: "job_title"+(i-1), id: "job_title"+(i-1)});
+				$("label[for='job_title"+i+"']").attr('for','job_title'+(i-1));
+				$("textarea[name=job_desc"+i+"]").attr({name: "job_desc"+(i-1), id: "job_desc"+(i-1)});
+				$("label[for='job_desc"+i+"']").attr('for','job_desc'+(i-1));
+				$("input[name=job_tags"+i+"]").attr({name: "job_tags"+(i-1), id: "job_tags"+(i-1)});
+				$("label[for='job_tags"+i+"']").attr('for','job_tags'+(i-1));
+				$("input[name=money_job"+i+"]").attr({name: "money_job"+(i-1), id: "money_job"+(i-1)});
+				$("label[for='money_job"+i+"']").attr('for','money_job'+(i-1));
+				for(var j=1; j<proj_loc_number; j++){
+					$("#job_"+i+"_loc_"+j).attr({name: "job_"+(i-1)+"_loc_"+j, id: "job_"+(i-1)+"_loc_"+j});
+					$("label[for='job_"+i+"_loc_"+j+"']").attr('for','job_'+(i-1)+'_loc_'+j);
+				}
+				i++;
+			}
+    }
+    return false;
+  });
+
+	$("input[name^=city]").live("change", function(){
+    var input_name_str = $(this).attr("id");
+		var i = parseInt(/city(\d+)/.exec(input_name_str)[1],10);
+		var region_name = $('#region'+i).val();
+		var city_name = $(this).val();
+  		for(var j=1; j<proj_job_number; j++){
+			$('label[for="job_'+j+'_loc_'+i+'"]').html(city_name+' , '+region_name).change();
+		}
+	});
+	$("input[name^=region]").live("change", function(){
+		var input_name_str = $(this).attr("id");
+		var i = parseInt(/region(\d+)/.exec(input_name_str)[1],10);
+		var city_name = $('#city'+i).val();
+		var region_name = $(this).val();
+  		for(var j=1; j<proj_job_number; j++){
+			$('label[for="job_'+j+'_loc_'+i+'"]').html(city_name+' , '+region_name).change();
+		}
+
+	});
+
+	var characters = 255;
+	$("#counter").append("You have  <strong>"+ characters+"</strong> characters remaining");
+//	$("li#project_job_form").live(
+	$("#short_desc").keyup(function(){
+    if($(this).val().length > characters){
+      $(this).val($(this).val().substr(0, characters));
+    }
+    var remaining = characters -  $(this).val().length;
+    $("#counter").html("You have <strong>"+  remaining+"</strong> characters remaining");
+    if(remaining <= 10)
+    {
+      $("#counter").css("color","red");
+    }
+    else
+    {
+      $("#counter").css("color","black");
+    }
+  });
+});
+-->

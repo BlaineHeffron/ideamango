@@ -1,0 +1,10 @@
+INSERT INTO ideas (creationdate,author,title,desc,manager,likes,views,tags)
+
+VALUES (NOW(),'','idea','Lorem ipsum dolor sit amet, consectetur
+adipiscing elit. Ut non ante libero. Curabitur accumsan tempus ligula non
+tempor. Aliquam sapien quam, commodo ut consequat sed, iaculis non tellus.
+Aenean eu sem enim, eget luctus metus. In hac habitasse platea dictumst.
+Maecenas vel nibh facilisis ligula gravida auctor ac ut ligula. Sed bibendum
+volutpat arcu eu tempor. Aliquam sit amet ante feugiat enim rutrum porttitor
+ac eget eros. Mauris tempus eleifend massa vel tristique. Sed ullamcorper
+magna et libero pretium laoreet.','Blaine','121','2323','idea,science,stuff')

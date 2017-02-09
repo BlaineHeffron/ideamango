@@ -1,0 +1,48 @@
+<!--
+function voteUp()
+{
+arrowUp=document.getElementById('up')
+arrowDown=document.getElementById('down')
+if (arrowUp.src.match("arrowUpOn.png"))
+        {arrowUp.src="arrowUpOff.png"}
+else
+        {arrowUp.src="arrowUpOn.png"}
+        {arrowDown.src="arrowDownOff.png"}
+}
+
+function voteDown()
+{
+arrowUp=document.getElementById('up')
+arrowDown=document.getElementById('down')
+if (arrowDown.src.match("arrowDownOn.png"))
+        {arrowDown.src="arrowDownOff.png"}
+else
+        {arrowDown.src="arrowDownOn.png"}
+        {arrowUp.src="arrowUpOff.png"}
+}
+
+function hoverImg(x)
+{
+
+if (x.src.match("arrowDownOn.png"))
+        {x.src="arrowDownOnGlow.png"}
+else if (x.src.match("arrowDownOff.png"))
+        {x.src="arrowDownOffGlow.png"}
+else if (x.src.match("arrowUpOn.png"))
+        {x.src="arrowUpOnGlow.png"}
+else if (x.src.match("arrowUpOff.png"))
+        {x.src="arrowUpOffGlow.png"}
+}
+function normalImg(x)
+{
+
+if (x.src.match("arrowDownOnGlow.png"))
+        {x.src="arrowDownOn.png"}
+else if (x.src.match("arrowDownOffGlow.png"))
+        {x.src="arrowDownOff.png"}
+else if (x.src.match("arrowUpOnGlow.png"))
+        {x.src="arrowUpOn.png"}
+else if (x.src.match("arrowUpOffGlow.png"))
+        {x.src="arrowUpOff.png"}
+}
+-->

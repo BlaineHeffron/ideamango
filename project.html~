@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+  <head><meta charset="utf-8"><meta name ="author" content = "Blaine"><meta name = "revised" content = "2012/11/26"><meta name = "description" content = "Project"><meta name = "keywords" content = "<?php echo $tag_string;?>">
+        <link rel="stylesheet" type="text/css" href="css/mango.css">
+        <title><?php echo $proj_data['title'];?></title>
+
+      </head>
+  <body>
+    <?php include('header.php');?>
+    <div id="proj_top">
+      <span id="like_count"> <?php echo $proj_data['p.likes'];?></span>
+      <h1>
+        <?php echo $proj_data['p.title'];?>
+      </h1>
+      <p id="proj_manager"> <a href="http://localhost/user/<?php echo $proj_data['u.id']; ?>"><?php echo $proj_data['u.name']; ?></a>
+      </p>
+      <p id="proj_location"> Location:
+        <?php
+        if($proj_data['p.has_location']){
+          $i = 0;
+          while(!empty($proj_loc[$i]['co.name'])){
+            echo "<a href='http://localhost/locations/{$proj_loc[$i]['l.id']}'>";
+
+            if(!is_null($proj_loc[$i]['ci.name'])){
+              if(!is_null($proj_loc[$i]['s.name']))
+                echo "{$proj_loc[$i]['ci.name']}, {$proj_loc[$i]['s.name']}";
+              else
+                echo "{$proj_loc[$i]['ci.name']}, {$proj_loc[$i]['co.name']}";
+              }
+            elseif(!is_null($proj_loc[$i]['s.name']))
+              echo "{$proj_loc[$i]['s.name']}, {$proj_loc[$i]['co.name']}";
+            elseif(!is_null($proj_loc[$i]['r.name']))
+              echo "{$proj_loc[$i]['r.name']}, {$proj_loc[$i]['co.name']}";
+            else
+              echo $proj_loc[$i]['co.name'];
+            echo "</a>";
+            $i++;
+          }
+        }
+        else
+          echo "<a href='http://localhost/locations/none'>Anywhere</a>";
+        ?>
+      </p>
+    </div>
+    <div id="proj_video">
+      <?php if(!is_null($proj_data['video'])){
+        echo '<video width="420" height="340" controls="controls" >
+                <source src="'. $proj_data["video"] . '.ogg" type="video/ogg">
+                <source src="'. $proj_data["video"] . '.mp4" type="video/mp4">
+                <source src="'. $proj_data["video"] . '.webm" type="video/webm">
+                <object data="'. $proj_data["video"] . '.mp4" width="320" height="240">
+                 <embed width="420" height="340" src="' . $proj_data["video"] . '.swf">
+                </object>
+                </video>';
+        }?>
+    </div>
+    <div id="proj_content">
+      <p id="proj_description"><h4>Project Description</h4><?php echo $proj_data['p.detailed_desc']; ?> </p>
+      <?php if(!is_null($proj_data['p.motivation']))
+      {?>
+      <p id="proj_motivation"><h4>Motivation</h4><?php echo $proj_data['p.motivation']; ?></p>
+      <?php }?>
+      <?php if(!is_null($proj_data['p.newsfeed']))
+      {?>
+      <p id="proj_news"><h4>News</h4><?php echo $proj_data['p.newsfeed']; ?></p>
+      <?php }?>
+      <?php if(!is_null($proj_data['p.goals']))
+      {?>
+      <p id="proj_goals"><h4>Goals</h4><?php echo $proj_data['p.goals']; ?></p>
+      <?php }?>
+      <?php if(!is_null($proj_data['p.obstacles']))
+      {?>
+      <p id="proj_obstacles"><h4>Obstacles</h4><?php echo $proj_data['p.obstacles']; ?></p>
+      <?php }?>
+    </div>
+    <div id="proj_job_display">
+      <?php
+      if($proj_data['p.has_jobs']){
+      echo '<div id="proj_jobs"><h4>Help Out</h4><ul>';
+        $i = 0;
+        while(!is_null($proj_jobs[$i]['j.name'])){
+          echo '<li><a href="localhost/jobs/'.$proj_jobs[$i]["j.id"].'">'. $proj_jobs[$i]["j.title"] . '</a></li>';
+          $i++;
+        }
+        echo'</ul></div>';
+      }?>
+    </div>
+    <div id="proj_manager_box"> <?php include('user_display_box.php?id='.$proj_data["u.id"]); ?> </div>
+
+
+
+

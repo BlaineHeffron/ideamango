@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><meta name ="author" content = "Blaine"><meta name = "revised" content = "2012/12/21"><meta name = "description" content = "idea creation form"><meta name = "keywords" content = "idea, sharing, network">
+        <link rel="stylesheet" type="text/css" href="css/mango.css">
+	<title>Idea Create</title>
+	<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+	<script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+	<script src="js/IdeaForm.js"></script>
+</head>
+<body>
+	<h1>Enter the details of your idea</h1>
+	<form name="idea_form" action="ideaformsubmit.php" onsubmit="return validateForm();" method="post">
+		idea title <input type="text" name="title">Keep it short, but descriptive.<br/>
+		Tags <input type="text" name="idea_tags">These are words that people can search to find your idea. Separate them by commas e.g. community, environment, health<br/>
+		Short Description <textarea name="short_desc" id="short_desc" rows="4" cols="40"></textarea><div id="counter"></div>Describe the main details of your idea in one or two sentences here - this will be displayed to users on the <a href="ideas.php" target="_blank">idea feed.</a><br/>
+		Detailed Description <textarea name="detailed_desc" rows="8" cols="40"></textarea>* Here you can put more details about your idea. Leave this blank if your short description is sufficient.<br/>
+		Purpose <textarea name="purpose" rows="4" cols="40"></textarea>* Why do you want to share this idea with the world? <br/>
+		<div id="idea_location_form">
+	  	Location - if your idea will require help from people in your area(s), list them here.
+			<div id="locd1"><label for="city1">City</label><input type="text" name="city1" id="city1"><label for="region1">State/Province/Region</label><input type="text" name="region1" id="region1"><label for="country1">Country</label> <input type="text" name="country1" id="country1"></div>
+		</div><br/>
+		<a href="#" onclick="return false;" id="add_idea_location">Add another location</a>
+		<input type="submit" value="Submit">
+	</form>
+<script>
+	function validateForm()
+	{
+		var title=document.forms["idea_form"]["title"].value;
+		var idea_tags=document.forms["idea_form"]["idea_tags"].value;
+		var short_desc=document.forms["idea_form"]["short_desc"].value;
+
+		if (title==null || title=="")
+		{
+	       		alert("Title needs to be filled out");
+			return false;
+	  	}
+		if (idea_tags==null || idea_tags=="")
+		{
+			alert("Tags field needs to be filled out");
+			return false;
+		}
+		if (short_desc==null || short_desc=="")
+		{
+			alert("You need to fill out a short description of your idea");
+			return false;
+    }
+    if (title.length > 50)
+    {
+      alert("Your title can be no longer than 50 characters.");
+      return false;
+    }
+    if (short_desc.length > 255)
+    {
+      alert("Your short description can be no longer than 255 characters.");
+      return false;
+    }
+
+		for(var i=1; i < idea_loc_number; i++){
+			var city = document.forms["idea_form"]["city"+i].value;
+			var region = document.forms["idea_form"]["region"+i].value;
+			var country = document.forms["idea_form"]["country"+i].value;
+			if (!((city==null || city=="") && (region==null || region=="") && (country==null || country=="")))
+			{
+
+				if (city==null || city=="")
+				{
+					alert("City needs to be filled out for location "+i);
+					return false;
+				}
+				if (region==null || region=="")
+				{
+					alert("Region needs to be filled out for location "+i);
+					return false;
+				}
+				if (country==null || country=="")
+				{
+					alert("Country needs to be filled out for location "+i);
+					return false;
+				}
+			}
+
+		}
+		for (var i=1; i<idea_job_number; i++)
+		{
+			var job_title = document.forms["idea_form"]["job_title"+i].value;
+			var job_desc = document.forms["idea_form"]["job_desc"+i].value;
+			var job_tags = document.forms["idea_form"]["job_tags"+i].value;
+			if (!((job_title==null || job_title=="") && (job_desc==null || job_desc=="") && (job_tags==null || job_tags=="")))
+			{
+				if (job_title==null || job_title=="")
+				{
+					alert("Job title needs to be filled out for job "+i);
+					return false;
+				}
+				if (job_desc==null || job_desc=="")
+				{
+					alert("Job description needs to be filled out for job "+i);
+					return false;
+				}
+				if (job_tags==null || job_tags=="")
+				{
+					alert("You need to add tags for job "+i);
+					return false;
+				}
+			}
+
+		}
+
+	}
+</script>
+
+</body>
+</html>
+
+
